@@ -1,0 +1,24 @@
+int main(void)
+{
+    int numbers[5];
+    int i;
+    int sum;
+
+    numbers[0] = 4;
+    numbers[1] = 8;
+    numbers[2] = 15;
+    numbers[3] = 16;
+    numbers[4] = 23;
+
+    i = 0;
+    sum = 0;
+
+    while (i < 5)
+    {
+        sum = sum + numbers[i];
+        i = i + 1;
+    }
+
+    output(sum);
+    return 0;
+}
