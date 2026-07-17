@@ -1,0 +1,17 @@
+int factorial(int n)
+{
+    if (n == 0)
+        return 1;
+    else
+        return n * factorial(n - 1);
+}
+
+int main()
+{
+    int result;
+    int num;
+    num = input();
+    result = factorial(num);
+    output(result);
+    return 0;
+}

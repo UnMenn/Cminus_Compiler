@@ -1,0 +1,41 @@
+int main(void)
+{
+    int a[5];
+    int i;
+    int j;
+    int temp;
+
+    a[0] = 5;
+    a[1] = 2;
+    a[2] = 9;
+    a[3] = 1;
+    a[4] = 3;
+
+    i = 0;
+
+    while (i < 5)
+    {
+        j = 0;
+
+        while (j < 4)
+        {
+            if (a[j] > a[j + 1])
+            {
+                temp = a[j];
+                a[j] = a[j + 1];
+                a[j + 1] = temp;
+            }
+
+            j = j + 1;
+        }
+
+        i = i + 1;
+    }
+
+    output(a[0]);
+    output(a[1]);
+    output(a[2]);
+    output(a[3]);
+    output(a[4]);
+    return 0;
+}
