@@ -55,6 +55,7 @@ Compile and execute one of the example programs:
 | `--print-ast`     | Print AST                              |
 | `--print-symbols` | Print symbol table                     |
 | `--print-ir`      | Print three-address code               |
+| `--print-cfg`     | Print control flow graph               |
 
 ## Testing
 
