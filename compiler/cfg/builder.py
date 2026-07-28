@@ -1,4 +1,4 @@
-def print_cfg(cfgs):
+def cfg_printer(cfgs):
     for i, cfg in enumerate(cfgs):
         print(cfg.blocks)
         print(f"\n========== CFG {i} ==========\n")

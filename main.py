@@ -5,7 +5,7 @@ from compiler.lexer import recibeScanner, getToken
 from compiler.parser import parse, recibeParser
 from compiler.semantic import *
 from compiler.ir import TACGenerator, print_tac
-from compiler.cfg import CFGBuilder
+from compiler.cfg import CFGBuilder, cfg_printer
 from compiler.vm import run_program
 
 def load_program(filename):
@@ -74,6 +74,7 @@ def compile_program(
         print_ast=False,
         print_symbols=False,
         print_ir=False,
+        print_cfg=False,
         verbose=False
 ):
 
@@ -111,6 +112,9 @@ def compile_program(
 
             cfg_builder = CFGBuilder(code)
             cfg = cfg_builder.build()
+
+            if print_cfg:
+                cfg_printer(cfg)
 
             log("[VM] Running program...", verbose)
 
@@ -187,6 +191,13 @@ def main():
     )
 
 
+    parser.add_argument(
+        "--print-cfg",
+        action="store_true",
+        help="Print control flow graph"
+    )
+
+
     args = parser.parse_args()
 
     program = load_program(args.file)
@@ -207,6 +218,7 @@ def main():
             print_ast=args.print_ast,
             print_symbols=args.print_symbols,
             print_ir=args.print_ir,
+            print_cfg=args.print_cfg,
             verbose=args.verbose
         )
 
