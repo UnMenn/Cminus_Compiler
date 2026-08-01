@@ -1,16 +1,16 @@
-def cfg_printer(cfgs):
-    for i, cfg in enumerate(cfgs):
-        print(cfg.blocks)
-        print(f"\n========== CFG {i} ==========\n")
+# def cfg_printer(cfgs):
+#     for i, cfg in enumerate(cfgs):
+#         print(cfg.blocks)
+#         print(f"\n========== CFG {i} ==========\n")
 
-        for block in cfg.blocks:
-            print(f"{block.name}:")
-            for instr in block.instructions:
-                print("   ", instr)
+#         for block in cfg.blocks:
+#             print(f"{block.name}:")
+#             for instr in block.instructions:
+#                 print("   ", instr)
 
-            print("   preds:", [p.name for p in block.pred])
-            print("   succs:", [s.name for s in block.succ])
-            print()
+#             print("   preds:", [p.name for p in block.pred])
+#             print("   succs:", [s.name for s in block.succ])
+#             print()
 
 
 class BasicBlock:
@@ -29,6 +29,8 @@ class CFG:
         self.name = name
         self.blocks = []
         self.entry = None
+        self.params = []
+        self.return_type = ""
 
     def __repr__(self):
         return f"CFG({self.name})"
@@ -65,17 +67,20 @@ class CFGBuilder:
 
     def build_for_function(self, func_tac):
 
-        func_name = None
+        func_name = "main"
+        return_type = "int"
+        params = []
 
         for ins in func_tac:
             if ins[0] == "FUNC":
-                func_name = ins[1] if len(ins) > 1 else None
-                break
+                func_name = ins[1]
+                if len(ins) > 2:
+                    return_type = ins[2]
 
-        if func_name is None:
-            func_name = "main"
+            elif ins[0] == "PARAM":
+                params.append(ins[1])
 
-        func_tac = [i for i in func_tac if i[0] not in {"FUNC", "END_FUNC"}]
+        func_tac = [i for i in func_tac if i[0] not in {"FUNC", "END_FUNC", "PARAM"}]
 
         if not func_tac:
             cfg = CFG(func_name)
@@ -167,6 +172,8 @@ class CFGBuilder:
         cfg = CFG(func_name)
         cfg.blocks = blocks
         cfg.entry = entry
+        cfg.params = params
+        cfg.return_type = return_type
 
         return cfg
 

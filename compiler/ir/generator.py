@@ -33,7 +33,7 @@ class TACGenerator:
         return self.builder.code
 
     def gen_function(self, node):
-        self.builder.emit("FUNC", node.name)
+        self.builder.emit("FUNC", node.name, node.return_type)
 
         for param in node.params:
             self.builder.emit("PARAM", param.name)

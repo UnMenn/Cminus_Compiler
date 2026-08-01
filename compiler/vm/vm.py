@@ -129,27 +129,17 @@ def call_function(func_map, state, name, args):
         return int(input())
 
     if name == "output":
-        val = resolve(state, args[0]) if args else 0
-        print(val)
+        print(args[0] if args else 0)
         return 0
 
     cfg = func_map.get(name)
     if cfg is None:
         return 0
 
-    state["frames"].append({"args": args, "arg_index": 0})
+    state["frames"].append({})
 
-    for i, a in enumerate(args):
-        frame(state)[f"p{i}"] = a
-
-    param_names = []
-
-    if hasattr(func_map[name], "param_names"):
-        param_names = func_map[name].param_names
-
-    for i, pname in enumerate(param_names):
-        if i < len(args):
-            frame(state)[pname] = args[i]
+    for param, value in zip(cfg.params, args):
+        frame(state)[param] = value
 
     ret = run_cfg(cfg, func_map, state)
 

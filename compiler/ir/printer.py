@@ -9,7 +9,8 @@ def print_tac(code):
         # --------------------------------------------------
 
         if op == "FUNC":
-            print(f"\nfunction {instr[1]}:")
+            _, name, ret_type = instr
+            print(f"\nfunction {name} -> {ret_type}")
             continue
 
         if op == "END_FUNC":
